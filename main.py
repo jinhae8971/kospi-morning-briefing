@@ -44,7 +44,7 @@ def load_config() -> dict:
         "anthropic_api_key": os.environ.get("ANTHROPIC_API_KEY", ""),
         "telegram_token":    os.environ.get("TELEGRAM_TOKEN", ""),
         "telegram_chat_id":  os.environ.get("TELEGRAM_CHAT_ID", ""),
-        "github_pat":        os.environ.get("GH_PAT", "") or os.environ.get("GITHUB_PAT", ""),
+        "github_repo":       os.environ.get("GITHUB_REPOSITORY", "jinhae8971/kospi-morning-briefing"),
     }
     config_path = os.path.join(os.path.dirname(__file__), "config.json")
     if os.path.exists(config_path):
@@ -919,45 +919,17 @@ def generate_telegram_messages(result: DiscussionResult, report_url: Optional[st
 
 
 # ============================================================
-# GitHub Gist 업로드
+# GitHub Pages / Raw URL 생성
 # ============================================================
-def upload_to_gist(html: str, github_pat: str, date_str: str) -> Optional[str]:
-    if not github_pat:
-        logger.warning("GITHUB_PAT 없음 — Gist 업로드 스킵")
-        return None
-    headers = {
-        "Authorization": f"token {github_pat}",
-        "Accept": "application/vnd.github+json",
-        "User-Agent": "kospi-morning-briefing",
-    }
-    filename = f"kospi_briefing_{date_str}.html"
-    payload = {
-        "description": f"KOSPI 모닝브리핑 - {date_str}",
-        "public": True,
-        "files": {filename: {"content": html}},
-    }
-    try:
-        # 기존 Gist 검색
-        existing_id = None
-        list_resp = requests.get("https://api.github.com/gists", headers=headers, timeout=15)
-        if list_resp.ok:
-            for g in list_resp.json():
-                if "KOSPI 모닝브리핑" in g.get("description", ""):
-                    existing_id = g["id"]
-                    break
-        if existing_id:
-            resp = requests.patch(f"https://api.github.com/gists/{existing_id}", headers=headers, json=payload, timeout=30)
-        else:
-            resp = requests.post("https://api.github.com/gists", headers=headers, json=payload, timeout=30)
-        resp.raise_for_status()
-        gist_data = resp.json()
-        raw_url = gist_data["files"][filename]["raw_url"]
-        preview = f"https://htmlpreview.github.io/?{raw_url}"
-        logger.info(f"Gist 업로드 완료: {preview}")
-        return preview
-    except Exception as e:
-        logger.error(f"Gist 업로드 실패: {e}")
-        return None
+def get_report_url(github_repo: str, date_str: str) -> str:
+    """reports/ 에 커밋된 HTML의 htmlpreview URL 반환 (API 호출 없음)"""
+    raw_url = (
+        f"https://raw.githubusercontent.com/{github_repo}/main"
+        f"/reports/report_{date_str}.html"
+    )
+    preview_url = f"https://htmlpreview.github.io/?{raw_url}"
+    logger.info(f"리포트 URL: {preview_url}")
+    return preview_url
 
 
 # ============================================================
@@ -1002,18 +974,19 @@ async def main_async() -> None:
         # 2. 토론 실행
         result = await DiscussionOrchestrator(config).run(market_data)
 
-        # 3. HTML 리포트 생성 & 저장
+        # 3. HTML 리포트 생성 & 저장 (reports/ 폴더)
         html = generate_html_report(result)
-        report_path = f"report_{today}.html"
+        os.makedirs("reports", exist_ok=True)
+        report_path = os.path.join("reports", f"report_{today}.html")
         with open(report_path, "w", encoding="utf-8") as f:
             f.write(html)
         logger.info(f"HTML 저장: {report_path}")
 
-        # 4. Gist 업로드
-        gist_url = upload_to_gist(html, config.get("github_pat", ""), today)
+        # 4. 리포트 URL 생성 (워크플로우가 커밋 후 접근 가능)
+        report_url = get_report_url(config.get("github_repo", "jinhae8971/kospi-morning-briefing"), today)
 
         # 5. Telegram 발송
-        msgs = generate_telegram_messages(result, report_url=gist_url)
+        msgs = generate_telegram_messages(result, report_url=report_url)
         send_telegram(msgs, config["telegram_token"], config["telegram_chat_id"])
 
         logger.info("KOSPI 모닝브리핑 완료!")

@@ -5,6 +5,9 @@ on:
     - cron: "0 22 * * 0-4"   # KST 월~금 07:00 (UTC 일~목 22:00)
   workflow_dispatch:           # 수동 실행
 
+permissions:
+  contents: write              # reports/ 폴더 커밋·푸시에 필요
+
 jobs:
   briefing:
     runs-on: ubuntu-latest
@@ -23,19 +26,28 @@ jobs:
 
       - name: KOSPI 모닝브리핑 실행
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          TELEGRAM_TOKEN:    ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID:  ${{ secrets.TELEGRAM_CHAT_ID }}
-          GH_PAT:            ${{ secrets.GH_PAT }}
+          ANTHROPIC_API_KEY:     ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_TOKEN:        ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID:      ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_REPOSITORY:     ${{ github.repository }}
           TZ: Asia/Seoul
         run: python main.py
+
+      - name: HTML 리포트 커밋 & 푸시
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reports/
+          # 변경사항이 있을 때만 커밋
+          git diff --staged --quiet || git commit -m "report: KOSPI 브리핑 $(TZ=Asia/Seoul date +'%Y-%m-%d')"
+          git push
 
       - name: HTML 리포트 아티팩트 업로드
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: kospi-report-${{ github.run_number }}
-          path: report_*.html
+          path: reports/report_*.html
           retention-days: 30
 
       - name: 실패 알림
