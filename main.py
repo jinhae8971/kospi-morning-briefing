@@ -922,14 +922,11 @@ def generate_telegram_messages(result: DiscussionResult, report_url: Optional[st
 # GitHub Pages / Raw URL 생성
 # ============================================================
 def get_report_url(github_repo: str, date_str: str) -> str:
-    """reports/ 에 커밋된 HTML의 htmlpreview URL 반환 (API 호출 없음)"""
-    raw_url = (
-        f"https://raw.githubusercontent.com/{github_repo}/main"
-        f"/reports/report_{date_str}.html"
-    )
-    preview_url = f"https://htmlpreview.github.io/?{raw_url}"
-    logger.info(f"리포트 URL: {preview_url}")
-    return preview_url
+    """reports/ 에 커밋된 HTML의 GitHub Pages URL 반환"""
+    owner, repo_name = github_repo.split("/", 1)
+    pages_url = f"https://{owner}.github.io/{repo_name}/reports/report_{date_str}.html"
+    logger.info(f"리포트 URL: {pages_url}")
+    return pages_url
 
 
 # ============================================================
