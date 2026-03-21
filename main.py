@@ -752,12 +752,24 @@ body{{background:#0a0e1a;color:#e0e6f0;font-family:'Segoe UI','Malgun Gothic',sa
 .r-to{{color:#ffd166;font-weight:600}}
 .r-desc{{color:#6b7a8d;font-size:.74rem}}
 .rebuttal-body{{padding:9px 12px;font-size:.8rem;color:#c0ccd8;line-height:1.65}}
+.conclusion-box{{background:linear-gradient(135deg,#111827,#0f1f3a);border:2px solid {final_color};border-radius:16px;padding:28px;margin-bottom:28px;box-shadow:0 0 32px {final_color}33}}
+.conclusion-hero{{display:flex;align-items:center;gap:20px;margin-bottom:18px;padding-bottom:18px;border-bottom:2px solid {final_color}44}}
+.conclusion-icon{{font-size:3.5rem;line-height:1}}
+.conclusion-title{{font-size:.78rem;color:#8899aa;text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}}
+.conclusion-verdict{{font-size:2.6rem;font-weight:900;color:{final_color};letter-spacing:-.02em}}
+.conclusion-body{{font-size:.88rem;color:#d0dce8;line-height:1.85}}
+.conclusion-body h3{{color:{final_color};font-size:1rem;font-weight:700;margin:14px 0 6px;padding-left:10px;border-left:3px solid {final_color}}}
 .synth-box{{background:#111827;border:1px solid {final_color}44;border-radius:12px;padding:22px}}
 .synth-verdict{{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #1e3a5f}}
 .verdict-lbl{{font-size:.82rem;color:#6b7a8d}}
 .verdict-val{{font-size:2rem;font-weight:800;color:{final_color}}}
 .synth-body{{font-size:.83rem;color:#c0ccd8;line-height:1.8}}
 .synth-body h3{{color:#7db8f7;font-size:.92rem;margin:10px 0 5px}}
+details.mkt-details{{background:#111827;border:1px solid #1e3a5f;border-radius:10px;margin-bottom:28px}}
+details.mkt-details summary{{padding:12px 18px;font-size:1.05rem;font-weight:600;color:#7db8f7;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;border-radius:10px}}
+details.mkt-details summary::after{{content:"▼";font-size:.7rem;color:#6b7a8d;margin-left:auto}}
+details.mkt-details[open] summary::after{{content:"▲"}}
+details.mkt-details .mkt-inner{{padding:14px 18px 18px}}
 .chart-box{{background:#111827;border:1px solid #1e3a5f;border-radius:10px;padding:14px;margin-bottom:14px}}
 .footer{{text-align:center;padding:20px;color:#3a4a5a;font-size:.75rem;border-top:1px solid #1e3a5f;margin-top:28px}}
 </style>
@@ -769,90 +781,90 @@ body{{background:#0a0e1a;color:#e0e6f0;font-family:'Segoe UI','Malgun Gothic',sa
 </div>
 <div class="wrap">
 
-  <!-- 시장 현황 -->
-  <div class="sec">
-    <div class="sec-title">📈 시장 현황</div>
-    <div class="mkt-grid">
-      <div class="mkt-card">
-        <div class="lbl">KOSPI</div>
-        <div class="val">{md.kospi_current:,.2f}</div>
-        <div class="chg" style="color:{_sign_color(md.kospi_change_pct)}">{md.kospi_change_pct:+.2f}%</div>
+  <!-- 결론 (최상단 강조) -->
+  <div class="conclusion-box">
+    <div class="conclusion-hero">
+      <div class="conclusion-icon">{final_emoji}</div>
+      <div>
+        <div class="conclusion-title">모더레이터 종합 판단 · Phase 3</div>
+        <div class="conclusion-verdict">{final_outlook}</div>
       </div>
-      <div class="mkt-card">
-        <div class="lbl">S&amp;P 500</div>
-        <div class="val">{md.sp500_close:,.2f}</div>
-        <div class="chg" style="color:{_sign_color(md.sp500_change_pct)}">{md.sp500_change_pct:+.2f}%</div>
-      </div>
-      <div class="mkt-card">
-        <div class="lbl">NASDAQ</div>
-        <div class="val">{md.nasdaq_close:,.2f}</div>
-        <div class="chg" style="color:{_sign_color(md.nasdaq_change_pct)}">{md.nasdaq_change_pct:+.2f}%</div>
-      </div>
-      <div class="mkt-card">
-        <div class="lbl">Dow Jones</div>
-        <div class="val">{md.dow_close:,.2f}</div>
-        <div class="chg" style="color:{_sign_color(md.dow_change_pct)}">{md.dow_change_pct:+.2f}%</div>
-      </div>
-      <div class="mkt-card">
-        <div class="lbl">VIX</div>
-        <div class="val">{md.vix:.2f}</div>
-        <div class="chg" style="color:#888">공포지수</div>
-      </div>
-      <div class="mkt-card">
-        <div class="lbl">USD/KRW</div>
-        <div class="val">{md.usdkrw:,.1f}</div>
-        <div class="chg" style="color:{_sign_color(md.usdkrw_change_pct, invert=True)}">{md.usdkrw_change_pct:+.2f}%</div>
-      </div>
-      <div class="mkt-card">
-        <div class="lbl">금 (Gold)</div>
-        <div class="val">${md.gold_price:,.0f}</div>
-        <div class="chg" style="color:{_sign_color(md.gold_change_pct)}">{md.gold_change_pct:+.2f}%</div>
-      </div>
-      <div class="mkt-card">
-        <div class="lbl">WTI 유가</div>
-        <div class="val">${md.wti_price:.1f}</div>
-        <div class="chg" style="color:{_sign_color(md.wti_change_pct)}">{md.wti_change_pct:+.2f}%</div>
-      </div>
-      <div class="mkt-card">
-        <div class="lbl">미국채 10Y</div>
-        <div class="val">{md.us10y:.3f}%</div>
-        <div class="chg" style="color:#888">2Y: {md.us2y:.3f}%</div>
+      <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <div class="pill" style="background:#00c85322;color:#00c853">🟢 상승 {outlook_counts['상승']}개</div>
+        <div class="pill" style="background:#ffd60022;color:#ffd600">🟡 중립 {outlook_counts['중립']}개</div>
+        <div class="pill" style="background:#ff174422;color:#ff1744">🔴 하락 {outlook_counts['하락']}개</div>
       </div>
     </div>
+    <div class="conclusion-body">{synthesis_html}</div>
   </div>
 
-  {'<div class="sec"><div class="sec-title">🏭 업종별 등락률</div><div class="chart-box"><canvas id="sectorChart" height="100"></canvas></div></div>' if sec_sorted else ''}
+  {'<div class="sec"><div class="sec-title">🏭 강세 섹터 · 업종별 등락률</div><div class="chart-box"><canvas id="sectorChart" height="100"></canvas></div></div>' if sec_sorted else ''}
 
   <!-- Phase 1 -->
   <div class="sec">
-    <div class="sec-title">🤖 에이전트 독립 분석 <span class="badge">Phase 1</span></div>
-    <div class="outlook-pills">
-      <div class="pill" style="background:#00c85322;color:#00c853">🟢 상승 {outlook_counts['상승']}개</div>
-      <div class="pill" style="background:#ffd60022;color:#ffd600">🟡 중립 {outlook_counts['중립']}개</div>
-      <div class="pill" style="background:#ff174422;color:#ff1744">🔴 하락 {outlook_counts['하락']}개</div>
-    </div>
+    <div class="sec-title">🤖 에이전트별 분석 요약 <span class="badge">Phase 1</span></div>
     <div class="agents-grid">{agent_cards_html}</div>
   </div>
 
   <!-- Phase 2 -->
   <div class="sec">
-    <div class="sec-title">⚔️ 교차 반론 <span class="badge">Phase 2</span></div>
+    <div class="sec-title">⚔️ 교차반론 하이라이트 <span class="badge">Phase 2</span></div>
     {rebuttal_html}
   </div>
 
-  <!-- Phase 3 -->
-  <div class="sec">
-    <div class="sec-title">🎯 모더레이터 최종 종합 <span class="badge">Phase 3</span></div>
-    <div class="synth-box">
-      <div class="synth-verdict">
-        <div>
-          <div class="verdict-lbl">최종 전망</div>
-          <div class="verdict-val">{final_emoji} {final_outlook}</div>
+  <!-- 시장 현황 (접을 수 있는 섹션) -->
+  <details class="mkt-details">
+    <summary>📈 시장 현황 데이터</summary>
+    <div class="mkt-inner">
+      <div class="mkt-grid">
+        <div class="mkt-card">
+          <div class="lbl">KOSPI</div>
+          <div class="val">{md.kospi_current:,.2f}</div>
+          <div class="chg" style="color:{_sign_color(md.kospi_change_pct)}">{md.kospi_change_pct:+.2f}%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">S&amp;P 500</div>
+          <div class="val">{md.sp500_close:,.2f}</div>
+          <div class="chg" style="color:{_sign_color(md.sp500_change_pct)}">{md.sp500_change_pct:+.2f}%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">NASDAQ</div>
+          <div class="val">{md.nasdaq_close:,.2f}</div>
+          <div class="chg" style="color:{_sign_color(md.nasdaq_change_pct)}">{md.nasdaq_change_pct:+.2f}%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">Dow Jones</div>
+          <div class="val">{md.dow_close:,.2f}</div>
+          <div class="chg" style="color:{_sign_color(md.dow_change_pct)}">{md.dow_change_pct:+.2f}%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">VIX</div>
+          <div class="val">{md.vix:.2f}</div>
+          <div class="chg" style="color:#888">공포지수</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">USD/KRW</div>
+          <div class="val">{md.usdkrw:,.1f}</div>
+          <div class="chg" style="color:{_sign_color(md.usdkrw_change_pct, invert=True)}">{md.usdkrw_change_pct:+.2f}%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">금 (Gold)</div>
+          <div class="val">${md.gold_price:,.0f}</div>
+          <div class="chg" style="color:{_sign_color(md.gold_change_pct)}">{md.gold_change_pct:+.2f}%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">WTI 유가</div>
+          <div class="val">${md.wti_price:.1f}</div>
+          <div class="chg" style="color:{_sign_color(md.wti_change_pct)}">{md.wti_change_pct:+.2f}%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">미국채 10Y</div>
+          <div class="val">{md.us10y:.3f}%</div>
+          <div class="chg" style="color:#888">2Y: {md.us2y:.3f}%</div>
         </div>
       </div>
-      <div class="synth-body">{synthesis_html}</div>
     </div>
-  </div>
+  </details>
 
 </div>
 {chart_js}
