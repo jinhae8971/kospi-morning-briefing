@@ -1,0 +1,58 @@
+name: KOSPI 모닝브리핑
+
+on:
+  schedule:
+    - cron: "0 22 * * 0-4"   # KST 월~금 07:00 (UTC 일~목 22:00)
+  workflow_dispatch:           # 수동 실행
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: 패키지 설치
+        run: pip install -r requirements.txt
+
+      - name: KOSPI 모닝브리핑 실행
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_TOKEN:    ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID:  ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_PAT:        ${{ secrets.GITHUB_PAT }}
+          TZ: Asia/Seoul
+        run: python main.py
+
+      - name: HTML 리포트 아티팩트 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kospi-report-${{ github.run_number }}
+          path: report_*.html
+          retention-days: 30
+
+      - name: 실패 알림
+        if: failure()
+        env:
+          TELEGRAM_TOKEN:    ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID:  ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python - <<'EOF'
+          import os, requests
+          t = os.environ.get("TELEGRAM_TOKEN", "")
+          c = os.environ.get("TELEGRAM_CHAT_ID", "")
+          if t and c:
+              requests.post(
+                  f"https://api.telegram.org/bot{t}/sendMessage",
+                  json={"chat_id": c,
+                        "text": "❌ KOSPI 모닝브리핑 실패!\nGitHub Actions 로그를 확인하세요."},
+                  timeout=10,
+              )
+          EOF

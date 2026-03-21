@@ -1,0 +1,6 @@
+anthropic>=0.40.0
+yfinance>=0.2.40
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=5.0.0
+pytz>=2024.1
