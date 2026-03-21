@@ -44,7 +44,7 @@ def load_config() -> dict:
         "anthropic_api_key": os.environ.get("ANTHROPIC_API_KEY", ""),
         "telegram_token":    os.environ.get("TELEGRAM_TOKEN", ""),
         "telegram_chat_id":  os.environ.get("TELEGRAM_CHAT_ID", ""),
-        "github_pat":        os.environ.get("GITHUB_PAT", ""),
+        "github_pat":        os.environ.get("GH_PAT", "") or os.environ.get("GITHUB_PAT", ""),
     }
     config_path = os.path.join(os.path.dirname(__file__), "config.json")
     if os.path.exists(config_path):
