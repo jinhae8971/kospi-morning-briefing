@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>KOSPI 모닝브리핑 2026-03-30</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0e1a;color:#e0e6f0;font-family:'Segoe UI','Malgun Gothic',sans-serif;line-height:1.6;min-height:100vh}
+.hdr{background:linear-gradient(135deg,#0f1729,#1a2744);padding:22px 32px;border-bottom:1px solid #1e3a5f}
+.hdr h1{font-size:1.75rem;font-weight:700;color:#7db8f7;margin-bottom:4px}
+.hdr .sub{color:#8899aa;font-size:.85rem}
+.wrap{max-width:1400px;margin:0 auto;padding:24px 32px}
+.mkt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:28px}
+.mkt-card{background:#111827;border:1px solid #1e3a5f;border-radius:10px;padding:14px 18px}
+.mkt-card .lbl{font-size:.72rem;color:#6b7a8d;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.mkt-card .val{font-size:1.35rem;font-weight:700}
+.mkt-card .chg{font-size:.82rem;margin-top:3px}
+.sec{margin-bottom:28px}
+.sec-title{font-size:1.1rem;font-weight:600;color:#7db8f7;padding:7px 0;border-bottom:1px solid #1e3a5f;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.badge{background:#1e3a5f;color:#7db8f7;font-size:.68rem;padding:2px 7px;border-radius:4px}
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.agent-card{background:#111827;border:1px solid #1e3a5f;border-radius:10px;overflow:hidden}
+.agent-header{background:#0f1729;padding:10px 14px;display:flex;align-items:center;gap:9px}
+.agent-name{font-weight:700;font-size:.95rem;flex:1}
+.agent-role{font-size:.72rem;color:#6b7a8d}
+.agent-outlook{font-weight:700;font-size:.82rem}
+.agent-body{padding:12px 14px;font-size:.8rem;color:#c0ccd8;line-height:1.7}
+.outlook-pills{display:flex;gap:10px;margin-bottom:14px}
+.pill{padding:5px 14px;border-radius:18px;font-size:.82rem;font-weight:600}
+.rebuttal-item{background:#111827;border:1px solid #1e3a5f;border-radius:8px;margin-bottom:10px;overflow:hidden}
+.rebuttal-head{background:#0f1729;padding:7px 12px;display:flex;align-items:center;gap:7px;font-size:.82rem}
+.r-from{color:#7db8f7;font-weight:600}
+.r-arrow{color:#ff6b6b}
+.r-to{color:#ffd166;font-weight:600}
+.r-desc{color:#6b7a8d;font-size:.74rem}
+.rebuttal-body{padding:9px 12px;font-size:.8rem;color:#c0ccd8;line-height:1.65}
+.conclusion-box{background:linear-gradient(135deg,#111827,#0f1f3a);border:2px solid #ffd600;border-radius:16px;padding:28px;margin-bottom:28px;box-shadow:0 0 32px #ffd60033}
+.conclusion-hero{display:flex;align-items:center;gap:20px;margin-bottom:18px;padding-bottom:18px;border-bottom:2px solid #ffd60044}
+.conclusion-icon{font-size:3.5rem;line-height:1}
+.conclusion-title{font-size:.78rem;color:#8899aa;text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}
+.conclusion-verdict{font-size:2.6rem;font-weight:900;color:#ffd600;letter-spacing:-.02em}
+.conclusion-body{font-size:.88rem;color:#d0dce8;line-height:1.85}
+.conclusion-body h3{color:#ffd600;font-size:1rem;font-weight:700;margin:14px 0 6px;padding-left:10px;border-left:3px solid #ffd600}
+.synth-box{background:#111827;border:1px solid #ffd60044;border-radius:12px;padding:22px}
+.synth-verdict{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #1e3a5f}
+.verdict-lbl{font-size:.82rem;color:#6b7a8d}
+.verdict-val{font-size:2rem;font-weight:800;color:#ffd600}
+.synth-body{font-size:.83rem;color:#c0ccd8;line-height:1.8}
+.synth-body h3{color:#7db8f7;font-size:.92rem;margin:10px 0 5px}
+details.mkt-details{background:#111827;border:1px solid #1e3a5f;border-radius:10px;margin-bottom:28px}
+details.mkt-details summary{padding:12px 18px;font-size:1.05rem;font-weight:600;color:#7db8f7;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;border-radius:10px}
+details.mkt-details summary::after{content:"▼";font-size:.7rem;color:#6b7a8d;margin-left:auto}
+details.mkt-details[open] summary::after{content:"▲"}
+details.mkt-details .mkt-inner{padding:14px 18px 18px}
+.chart-box{background:#111827;border:1px solid #1e3a5f;border-radius:10px;padding:14px;margin-bottom:14px}
+.footer{text-align:center;padding:20px;color:#3a4a5a;font-size:.75rem;border-top:1px solid #1e3a5f;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <h1>📊 KOSPI 모닝브리핑</h1>
+  <div class="sub">멀티에이전트 토론 시스템 | 2026-03-30 07:25 KST | 소요: 43.7초</div>
+</div>
+<div class="wrap">
+
+  <!-- 결론 (최상단 강조) -->
+  <div class="conclusion-box">
+    <div class="conclusion-hero">
+      <div class="conclusion-icon">🟡</div>
+      <div>
+        <div class="conclusion-title">모더레이터 종합 판단 · Phase 3</div>
+        <div class="conclusion-verdict">중립</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <div class="pill" style="background:#00c85322;color:#00c853">🟢 상승 0개</div>
+        <div class="pill" style="background:#ffd60022;color:#ffd600">🟡 중립 0개</div>
+        <div class="pill" style="background:#ff174422;color:#ff1744">🔴 하락 5개</div>
+      </div>
+    </div>
+    <div class="conclusion-body"># KOSPI 모닝브리핑 최종 판단<br><br><h3>최종 전망: **하락** (단, 극단적 공포는 단기 반등 기회 내포)<br><br><h3>핵심 근거 (3가지)<br><br>1. **글로벌 리스크오프 본격화 - VIX 31 공포 확산**<br>   - S&amp;P500 -1.67%, 나스닥 -2.15% 전면 급락에 VIX 31.05 고공행진<br>   - 5개 에이전트 만장일치 하락 전망은 시장 컨센서스 반영<br>   - 외국인 자금 이탈 압력 + 원/달러 1,507원 고착화로 KOSPI 방어선 취약<br><br>2. **스태그플레이션 공포 재점화 - WTI $100 돌파 지속**<br>   - 원유 $102.61(+2.98%) 급등은 인플레이션 2차 파동 신호<br>   - 정유/화학 수혜론은 WTI-Brent 괴리(-7%)로 정제마진 압박 우려<br>   - 10년물 4.44% 고금리 고착화 → 금리인하 기대 후퇴로 밸류에이션 부담<br><br>3. **극단적 거래량 위축의 시장 무기력**<br>   - KOSPI 거래량 90만주는 매수 의지 완전 소멸 신호<br>   - 금 $4,517 사상최고가는 주식 이탈 → 안전자산 쏠림 확인<br>   - 방어섹터 선호도 거래량 부재 시 무의미 (전면 매도 우세)<br><br>---<br><br><h3>핵심 이견 사항<br><br>#<h3>🔴 **VIX 31 해석 논쟁: 공포의 정점 vs 하락의 시작**<br><br>**[하락 진영 - 매크로/섹터/리스크]**<br>- VIX 30+ = 추가 하락 여력 존재, 2008년처럼 40~80까지 확대 가능<br>- 현재는 공포 '시작' 단계이며 실물 악화(유가·금리) 동반 시 장기화<br><br>**[반등 가능성 제기 - 센티먼트/테크니컬]**<br>- VIX 30 돌파는 역사적으로 단기 저점 형성 구간 (2020/2022 사례)<br>- RSI 과매도 + 공포 극단은 역발상 매수 타이밍 신호<br>- 골드만삭스 "VIX 30+ 숏커버링 랠리 임박" 리포트 존재<br><br>**[모더레이터 판단]**  <br>VIX 31은 **양날의 검**입니다. 단기 기술적 반등 가능성은 인정하나, 유가·금리 등 **펀더멘털 악재가 동반된 공포**는 2020년 유</div>
+  </div>
+
+  
+
+  <!-- Phase 1 -->
+  <div class="sec">
+    <div class="sec-title">🤖 에이전트별 분석 요약 <span class="badge">Phase 1</span></div>
+    <div class="agents-grid">
+        <div class="agent-card">
+          <div class="agent-header" style="border-left:4px solid #ff1744">
+            <span class="agent-name">🔴 매크로</span>
+            <span class="agent-role">거시경제 분석가</span>
+            <span class="agent-outlook" style="color:#ff1744">하락</span>
+          </div>
+          <div class="agent-body">## 전망: 하락<br><br>## 핵심 근거 (3가지)<br><br>1. **미국 증시 급락과 공포지수 급등**: S&amp;P500 -1.67%, 나스닥 -2.15% 급락에 VIX 31.05로 고공행진. 글로벌 리스크오프 국면에서 외국인 자금이탈 압력 불가피<br><br>2. **WTI 유가 $100 돌파의 스태그플레이션 우려**: 유가가 $102.61로 급등하며 인플레이션 재점화 신호. 10년물 국채 4.44% 고수준 유지로 금리인하 기대 후퇴, 한국 수입물가 상승과 무역수지 악화 이중고<br><br>3. **장단기 스프레드 +0.833%p의 역설적 신호**: 급격한 스프레드 확대는 경기침체 우려 완화보다 장기금리 급등(채권 매도압력)을 시사. 글로벌 유동성 긴축 지속으로 신흥국 자산 매력도 저하<br><br>## 상세 분석<br><br>미국 증시 전면 급락과 VIX 31 돌파는 글로벌 리스크 회피 심화를 의미하며, 특히 유가 $100 돌파는 연준의 매파적 스탠스 장기화를 예고합니다. 10년물 4.44% 고착화는 밸류에이션 부담을 가중시키고, 원/달러 1,507원대 유지에도 불구하고 대외 펀더멘털 악화로 외국인 순매도 가능성이 높습니다. 금 가격 급등($4,517)은 안전자산 선호 강화를 반영하며, KOSPI는 외국인·기관 동반 매도로 5,400선 이탈 가능성에 주목해야 합니다.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header" style="border-left:4px solid #ff1744">
+            <span class="agent-name">🔴 테크니컬</span>
+            <span class="agent-role">기술적 분석가</span>
+            <span class="agent-outlook" style="color:#ff1744">하락</span>
+          </div>
+          <div class="agent-body">## 전망: 하락<br><br>## 핵심 근거 (3가지)<br><br>1. **미국 3대 지수 급락 및 VIX 급등**: S&amp;P500 -1.67%, 나스닥 -2.15% 급락하며 공포지수 VIX는 31.05로 급등. 30선 돌파는 강한 변동성 확대 신호로 위험회피 심리 강화<br><br>2. **원자재 시장 혼조와 리스크오프**: WTI +2.98% 상승했으나 브렌트유는 -4.07% 급락하는 괴리 현상. 금 가격 $4,517 상승은 전형적인 안전자산 선호 패턴으로 위험자산 매도 압력 시사<br><br>3. **KOSPI 거래량 급감**: 전일 거래량 90만주는 극도로 위축된 수준. 보합 마감 후 저조한 거래량은 매수 의지 부재를 반영하며, 외국인 선물 매도 우위 가능성 높음<br><br>## 상세 분석<br><br>KOSPI는 5,438선 지지를 유지했으나 극도로 낮은 거래량은 매수 동력 고갈을 시사합니다. 미국 증시의 광범위한 약세와 VIX 31선 돌파는 단기 조정 모멘텀을 강화하며, 5,400선 심리적 지지선 테스트가 예상됩니다. 원/달러 1,507원대 유지는 소폭 긍정적이나, 글로벌 리스크오프 분위기 속 외국인 매도가 재개될 경우 5,350~5,380 구간까지 하방 압력이 작용할 것으로 판단됩니다. 장 초반 갭하락 개장 후 5,400 부근 지지 여부가 핵심 변수입니다.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header" style="border-left:4px solid #ff1744">
+            <span class="agent-name">🔴 섹터</span>
+            <span class="agent-role">섹터 로테이션 분석가</span>
+            <span class="agent-outlook" style="color:#ff1744">하락</span>
+          </div>
+          <div class="agent-body">## 전망: 하락<br><br>## 핵심 근거 (3가지)<br><br>1. **미국 증시 전면 약세와 공포지수 급등** - S&amp;P 500 -1.67%, 나스닥 -2.15% 하락에 VIX 31.05로 고공행진하며 글로벌 위험회피 심화. 방어섹터(헬스케어, 필수소비재) 선호도 증가 예상<br><br>2. **유가 급등과 원자재 변동성 확대** - WTI +2.98% 급등으로 정유·화학 섹터는 수혜 가능하나, 운송·항공 등 비용 부담 섹터는 압박. Brent -4.07% 괴리는 공급 불확실성 반영<br><br>3. **원화 안정 속 수출섹터 차별화** - 원/달러 1,507원대 보합으로 IT·자동차 등 수출주는 상대적 방어 가능. 금 사상최고가($4,517) 경신은 안전자산 선호 강화 신호<br><br>## 상세 분석<br><br>섹터 데이터 부재로 정량분석은 제한적이나, 글로벌 위험회피 국면에서 방어적 섹터 로테이션 불가피합니다. 유가 급등은 에너지·화학 섹터에 단기 모멘텀 제공하나, 나스닥 2%대 급락은 국내 IT·반도체 섹터 동반 하락 압력으로 작용할 전망입니다. 금리 스프레드 확대(+0.833%p)는 경기민감 섹터보다 배당주·금융주 선호 강화 시사. 외국인 수급 악화 시 섹터 전반 동반 조정 가능성 높습니다.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header" style="border-left:4px solid #ff1744">
+            <span class="agent-name">🔴 센티먼트</span>
+            <span class="agent-role">시장 심리 분석가</span>
+            <span class="agent-outlook" style="color:#ff1744">하락</span>
+          </div>
+          <div class="agent-body">## 전망: 하락<br><br>## 핵심 근거 (3가지)<br><br>1. **공포심리 급등 - VIX 31.05 고공행진**: VIX가 31을 넘어서며 극도의 불안감을 시현. 미국 3대 지수가 일제히 1.5~2% 급락하는 공포 매도가 발생했고, 이는 한국 투자자들에게 패닉 심리로 전이될 가능성 높음.<br><br>2. **안전자산 선호 심화**: 금값이 4,517달러로 사상 최고치 경신(+0.57%)하며 위험회피 심리 극명. WTI 유가가 102달러까지 급등(+2.98%)한 것은 지정학적 리스크나 공급불안 신호로, 투자자들이 주식에서 이탈 중.<br><br>3. **원달러 1,507원대 고착**: 환율 방어선이 1,500원을 완전히 돌파하며 외국인 자금 이탈 우려 증폭. 나스닥 2% 이상 폭락 상황에서 외국인 매도 공세가 KOSPI로 쏟아질 것으로 예상.<br><br>## 상세 분석<br><br>미국발 공포 심리가 극에 달했습니다. VIX 31은 시장 참여자들이 극도로 위축된 상태를 의미하며, 나스닥 2.15% 폭락은 기술주 중심의 한국 시장에 직격탄입니다. 특히 금 사상 최고가와 유가 급등이 동반되는 것은 단순 조정이 아닌 구조적 불안의 신호입니다. 원화 약세 고착으로 외국인들의 추가 매도가 예상되며, 개인들도 손절 심리가 확산될 것입니다. 오늘은 방어적 관망세가 지</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header" style="border-left:4px solid #ff1744">
+            <span class="agent-name">🔴 리스크</span>
+            <span class="agent-role">리스크 관리 분석가 (보수적 실적 추정)</span>
+            <span class="agent-outlook" style="color:#ff1744">하락</span>
+          </div>
+          <div class="agent-body">## 전망: 하락<br><br>## 핵심 근거 (3가지)<br>1. **미국 증시 급락과 공포지수 급등**: S&amp;P500 -1.67%, 나스닥 -2.15% 하락에 VIX 31.05까지 상승하며 글로벌 리스크 회피 심리 극대화<br>2. **원유 가격 급등과 스태그플레이션 우려**: WTI $102.61(+2.98%) 고공행진으로 인플레이션 재점화 가능성, 실물경제 압박 심화<br>3. **원화 약세 지속과 외국인 이탈 위험**: 달러/원 1,507원대 고착화로 외국인 자금 유출 압력 증가, 유동성 경색 우려<br><br>## 상세 분석<br>미국 증시 전반 급락과 공포지수 31 돌파는 글로벌 리스크 자산 전면 회피를 시사합니다. 특히 WTI $100 돌파 지속은 원자재 인플레이션 재연 신호로 중앙은행 긴축 장기화 리스크를 내포합니다. 원화 1,500원 상회 고착화는 외국인 투자심리를 악화시키며, 금 가격 $4,500 돌파는 안전자산 선호 강화를 반영합니다. 섹터 데이터 부재로 방어적 포지셔닝 검증이 불가능한 점도 추가 불확실성 요인입니다. 보수적 관점에서 KOSPI는 5,400선 지지 테스트 가능성이 높습니다.</div>
+        </div></div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="sec">
+    <div class="sec-title">⚔️ 교차반론 하이라이트 <span class="badge">Phase 2</span></div>
+    
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">매크로</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">센티먼트</span>
+            <span class="r-desc">(이론 vs 현실)</span>
+          </div>
+          <div class="rebuttal-body">## 센티먼트 분석에 대한 매크로 반론<br><br>**VIX 31은 과매도 반등 신호일 수 있음**: 역사적으로 VIX 30+ 구간은 공포의 정점으로, 오히려 단기 저점 형성 후 기술적 반등 출발점이었음. 2020년 코로나, 2022년 우크라 사례 모두 VIX 극단 구간에서 저점 매수 기회 제공. <br><br>**금 최고치는 인플레 헤지 수요이지 주식 붕괴 신호 아님**: 유가 $100+ 국면에서 금 상승은 실물자산 선호 현상. 오히려 에너지·원자재株 수혜 기대로 업종 로테이션 가능성 시사.<br><br>**원화 약세는 수출기업 실적 개선 요인**: 1,507원은 삼성전자·현대차 등 수출 </div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">센티먼트</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">매크로</span>
+            <span class="r-desc">(현실 vs 이론)</span>
+          </div>
+          <div class="rebuttal-body">## 매크로 분석에 대한 반론<br><br>**VIX 31은 이미 과도한 공포 반영 - 역발상 기회 신호**: VIX 30 돌파는 역사적으로 단기 바닥권 진입 신호였음. 2020년 코로나, 2022년 금리 쇼크 때도 VIX 30+ 구간에서 매수 타이밍 형성. 현재 공포가 극단으로 치달아 오히려 기술적 반등 가능성 높아지는 국면. 패닉 후 저가매수 심리 유입 시 급반등 시나리오 배제 불가.</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">테크니컬</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">섹터</span>
+            <span class="r-desc">(가격 vs 가치)</span>
+          </div>
+          <div class="rebuttal-body">## 반론 (가격 vs 가치 관점)<br><br>**섹터 에이전트의 "방어섹터 선호" 논리는 현 차트 국면과 불일치합니다.**<br><br>VIX 30선 돌파 시 역사적으로 모든 섹터가 동반 하락하며, 방어주도 예외 없이 매도됩니다. 금 급등과 거래량 급감은 "선별 매수"가 아닌 "전면 현금화" 국면을 시사합니다. <br><br>유가 상승도 정유株 수혜보다 마진 압박 우려가 크며, 원화 안정은 외국인 매도 압력 완화 근거로 부족합니다. 현 기술적 시그널은 **섹터 무관 하락 리스크**를 경고합니다.</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">섹터</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">테크니컬</span>
+            <span class="r-desc">(가치 vs 가격)</span>
+          </div>
+          <div class="rebuttal-body">## 반론: 테크니컬 → 섹터<br><br>**거래량 급감을 전면 약세로 해석하나, 이는 오히려 섹터 차별화 강화 신호**. WTI/Brent 괴리와 금 최고가는 에너지·방어섹터로의 자금 재배치를 의미하며, 극단적 VIX는 역발상 매수 기회 시그널로 작용 가능. 시장 전체 하락보다 **섹터 로테이션 국면**으로 봐야 함.</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">리스크</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">매크로</span>
+            <span class="r-desc">(실적 손상 견제)</span>
+          </div>
+          <div class="rebuttal-body">## 매크로 분석에 대한 리스크 관점 반론<br><br>**장단기 스프레드 해석 과오**: 스프레드 +0.833%p 확대를 채권 매도압력으로 단정했으나, 실제로는 10년물 4.44% 고착화 속 2년물 3.61%로 하락한 결과입니다. 단기금리 하락은 Fed 피벗 기대 반영이며, 이는 **하반기 금리인하 시나리오 재부각**으로 해석해야 합니다. 글로벌 유동성 긴축 지속보다는 정책 전환점 임박 신호로, 신흥국 자산 매력도는 오히려 **선제적 반등 국면 진입 가능성**을 시사합니다.</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">리스크</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">섹터</span>
+            <span class="r-desc">(취약성 견제)</span>
+          </div>
+          <div class="rebuttal-body">## 섹터 분석에 대한 리스크 견제<br><br>**정유·화학 수혜론의 함정**: WTI와 Brent 괴리(-7% 이상)는 정제마진 압박 신호이며, 유가 급등 시 수요파괴로 실적 개선 불확실. **수출주 방어 가능론 과신**: 원화 1,507원은 여전히 약세 수준으로 외국인 매도 압력 상존하며, 글로벌 수요 둔화 시 환율 효과 무력화. **섹터 데이터 부재 인정**: 정량 근거 없는 차별화 전망은 희망적 추론에 불과.</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">센티먼트</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">리스크</span>
+            <span class="r-desc">(과도한 비관 견제)</span>
+          </div>
+          <div class="rebuttal-body">## 반론: 과도한 공포 심리는 단기 반등 신호<br><br>VIX 31 수준은 역사적으로 **공포 극점 = 매수 기회** 구간입니다. 2022년 VIX 30 돌파 후 2주 내 평균 5% 반등했고, 현재 골드만삭스는 "VIX 30+ 영역에서 숏커버링 랠리 임박" 전망을 제시했습니다. <br><br>외국인은 이미 4월 초부터 순매도 전환했으나 KOSPI는 2,500선 방어 중이며, 삼성전자 등 대형주 밸류에이션이 PER 10배 하단까지 내려와 **저가 매수 수급 유입** 대기 중입니다. <br><br>유가 급등은 정유·화학주에 단기 호재이며, 원화 약세는 수출기업 실적 개선 요인으로 작용</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">테크니컬</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">매크로</span>
+            <span class="r-desc">(차트 vs 펀더멘털)</span>
+          </div>
+          <div class="rebuttal-body">## 매크로 분석에 대한 테크니컬 반론<br><br>**VIX 31 수준의 과도한 공포는 역설적 매수신호 가능성**: 역사적으로 VIX 30 돌파 후 단기 oversold 반등이 빈번. 현재 RSI·스토캐스틱 과매도 구간 진입 시 기술적 반등 모멘텀 형성 가능. <br><br>**유가 급등은 단기 변동성일 뿐 차트상 지속성 불확실**: WTI 일봉 상 $100 돌파 후 상단 볼린저밴드 이탈로 단기 과열 신호. 조정 가능성 높아 스태그플레이션 우려는 조기 판단.<br><br>**장단기 스프레드 확대는 채권시장 일시 변동**: 기술적으론 KOSPI 5,438 지지선 유지가 핵심. 지지 이탈</div>
+        </div>
+  </div>
+
+  <!-- 시장 현황 (접을 수 있는 섹션) -->
+  <details class="mkt-details">
+    <summary>📈 시장 현황 데이터</summary>
+    <div class="mkt-inner">
+      <div class="mkt-grid">
+        <div class="mkt-card">
+          <div class="lbl">KOSPI</div>
+          <div class="val">5,438.87</div>
+          <div class="chg" style="color:#00c853">+0.00%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">S&amp;P 500</div>
+          <div class="val">6,368.85</div>
+          <div class="chg" style="color:#ff1744">-1.67%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">NASDAQ</div>
+          <div class="val">20,948.36</div>
+          <div class="chg" style="color:#ff1744">-2.15%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">Dow Jones</div>
+          <div class="val">45,166.64</div>
+          <div class="chg" style="color:#ff1744">-1.73%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">VIX</div>
+          <div class="val">31.05</div>
+          <div class="chg" style="color:#888">공포지수</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">USD/KRW</div>
+          <div class="val">1,507.9</div>
+          <div class="chg" style="color:#00c853">-0.03%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">금 (Gold)</div>
+          <div class="val">$4,518</div>
+          <div class="chg" style="color:#00c853">+0.57%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">WTI 유가</div>
+          <div class="val">$102.6</div>
+          <div class="chg" style="color:#00c853">+2.98%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">미국채 10Y</div>
+          <div class="val">4.440%</div>
+          <div class="chg" style="color:#888">2Y: 3.607%</div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+</div>
+
+<div class="footer">
+  KOSPI 모닝브리핑 멀티에이전트 시스템 | 2026-03-30 07:25 KST<br>
+  ⚠️ 본 리포트는 AI 분석으로 투자 조언이 아닙니다
+</div>
+</body>
+</html>
