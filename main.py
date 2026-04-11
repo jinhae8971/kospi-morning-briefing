@@ -881,53 +881,86 @@ details.mkt-details .mkt-inner{{padding:14px 18px 18px}}
 # Telegram 메시지 생성
 # ============================================================
 def generate_telegram_messages(result: DiscussionResult, report_url: Optional[str] = None) -> List[str]:
+    """단일 메시지 전문 리서치 리포트 스타일"""
     md = result.market_data
+
+    # 에이전트 전망 집계
     counts = {"상승": 0, "중립": 0, "하락": 0}
     for a in result.phase1_analyses.values():
         if a.outlook in counts:
             counts[a.outlook] += 1
 
+    # 최종 전망
     final_outlook = "중립"
     if "## 최종 전망: 상승" in result.phase3_synthesis:
         final_outlook = "상승"
     elif "## 최종 전망: 하락" in result.phase3_synthesis:
         final_outlook = "하락"
 
-    arrow_kospi = "▲" if md.kospi_change_pct >= 0 else "▼"
-    msg1 = (
-        f"📊 <b>KOSPI 모닝브리핑</b>  {md.date}\n\n"
-        f"<b>전일 KOSPI</b>: {md.kospi_current:,.2f} {arrow_kospi} {md.kospi_change_pct:+.2f}%\n"
-        f"<b>S&amp;P500</b>: {md.sp500_close:,.2f} ({md.sp500_change_pct:+.2f}%)\n"
-        f"<b>NASDAQ</b>: {md.nasdaq_close:,.2f} ({md.nasdaq_change_pct:+.2f}%)\n"
-        f"<b>Dow</b>: {md.dow_close:,.2f} ({md.dow_change_pct:+.2f}%)\n"
-        f"<b>VIX</b>: {md.vix:.2f} | <b>USD/KRW</b>: {md.usdkrw:,.1f}\n"
-        f"<b>금</b>: ${md.gold_price:,.0f} ({md.gold_change_pct:+.2f}%) | "
-        f"<b>WTI</b>: ${md.wti_price:.1f} ({md.wti_change_pct:+.2f}%)\n"
-        f"<b>미국채 10Y</b>: {md.us10y:.3f}%\n\n"
-        f"🤖 <b>에이전트 전망 집계</b>\n"
-        f"🟢 상승 {counts['상승']}개 | 🟡 중립 {counts['중립']}개 | 🔴 하락 {counts['하락']}개"
-    )
+    # 방향 표시
+    def arrow(v): return "▲" if v >= 0 else "▼"
+    def sgn(v):   return f"{v:+.2f}%"
 
-    agent_lines = "\n\n📌 <b>에이전트 핵심 포인트</b>"
+    lines = []
+
+    # ── 헤더 ──────────────────────────────────────────────────────
+    lines.append(f"<b>KOSPI 모닝브리핑</b>  |  {md.date}")
+    lines.append("─" * 32)
+
+    # ── 글로벌 지수 ───────────────────────────────────────────────
+    lines.append("<b>[글로벌 지수]</b>")
+    lines.append(f"  KOSPI       {md.kospi_current:>10,.2f}  {arrow(md.kospi_change_pct)} {sgn(md.kospi_change_pct)}")
+    lines.append(f"  S&amp;P 500 {md.sp500_close:>10,.2f}  {arrow(md.sp500_change_pct)} {sgn(md.sp500_change_pct)}")
+    lines.append(f"  NASDAQ    {md.nasdaq_close:>10,.2f}  {arrow(md.nasdaq_change_pct)} {sgn(md.nasdaq_change_pct)}")
+    lines.append(f"  Dow Jones  {md.dow_close:>10,.2f}  {arrow(md.dow_change_pct)} {sgn(md.dow_change_pct)}")
+    lines.append("")
+
+    # ── 주요 지표 ─────────────────────────────────────────────────
+    lines.append("<b>[주요 지표]</b>")
+    lines.append(f"  VIX {md.vix:.2f}  |  USD/KRW {md.usdkrw:,.1f}")
+    lines.append(f"  Gold ${md.gold_price:,.0f} ({md.gold_change_pct:+.2f}%)  |  WTI ${md.wti_price:.1f} ({md.wti_change_pct:+.2f}%)")
+    lines.append(f"  미국채 10Y {md.us10y:.3f}%")
+    lines.append("")
+
+    # ── AI 에이전트 전망 ─────────────────────────────────────────
+    vote_str = f"상승 {counts['상승']}  중립 {counts['중립']}  하락 {counts['하락']}"
+    lines.append(f"<b>[AI 에이전트 전망]</b>  {vote_str}  →  최종: <b>{final_outlook}</b>")
     for name, a in result.phase1_analyses.items():
-        pts = "\n".join(f"  • {p[:80]}" for p in a.key_points[:2])
-        agent_lines += f"\n{_outlook_emoji(a.outlook)} <b>{name}</b> ({a.outlook})"
-        if pts:
-            agent_lines += f"\n{pts}"
-    msg2 = agent_lines
+        outlook_mark = "+" if a.outlook == "상승" else "-" if a.outlook == "하락" else "="
+        pt = a.key_points[0][:70] if a.key_points else ""
+        lines.append(f"  [{outlook_mark}] {name}: {pt}")
+    lines.append("")
 
-    fe = _outlook_emoji(final_outlook)
-    synth_short = result.phase3_synthesis[:700]
-    msg3 = (
-        f"{fe} <b>최종 판단: {final_outlook}</b>\n\n"
-        f"{synth_short}\n\n"
-        f"⏱ 소요: {result.total_duration_sec:.0f}초 | ⚠️ 투자 조언 아님"
-    )
+    # ── 종합 판단 요약 ────────────────────────────────────────────
+    # phase3 synthesis에서 핵심 문장만 추출 (최대 350자)
+    synth = result.phase3_synthesis
+    # 마크다운 헤더 제거 후 첫 350자
+    import re
+    synth_clean = re.sub(r'#{1,3}\s+[^\n]+\n', '', synth).strip()
+    synth_clean = re.sub(r'\*{1,2}([^*]+)\*{1,2}', r'\1', synth_clean)  # **bold** 제거
+    synth_short = synth_clean[:350].rsplit(' ', 1)[0] + "..."
+    lines.append(f"<b>[종합 판단]</b>")
+    lines.append(f"  {synth_short}")
+    lines.append("")
 
-    msgs = [msg1, msg2, msg3]
+    # ── 출처 & 리포트 링크 ───────────────────────────────────────
+    footer = f"<i>소요: {result.total_duration_sec:.0f}s  |  투자 판단의 책임은 투자자 본인에게 있습니다.</i>"
     if report_url:
-        msgs.append(f"📄 <b>전체 HTML 리포트</b>\n{report_url}")
-    return msgs
+        footer += f"\n<i>리포트: {report_url}</i>"
+    lines.append(footer)
+
+    newline = "\n"
+    msg = newline.join(lines)
+
+    # 4096자 초과 시 종합 판단 요약만 트리밍
+    if len(msg) > 4090:
+        trim = 4090 - len(msg)
+        synth_short = synth_clean[:350 + trim].rsplit(' ', 1)[0] + "..."
+        lines[-3] = f"  {synth_short}"
+        msg = newline.join(lines)
+
+    return [msg]
+
 
 
 # ============================================================
