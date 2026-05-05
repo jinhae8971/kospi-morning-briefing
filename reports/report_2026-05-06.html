@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>KOSPI 모닝브리핑 2026-05-06</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0e1a;color:#e0e6f0;font-family:'Segoe UI','Malgun Gothic',sans-serif;line-height:1.6;min-height:100vh}
+.hdr{background:linear-gradient(135deg,#0f1729,#1a2744);padding:22px 32px;border-bottom:1px solid #1e3a5f}
+.hdr h1{font-size:1.75rem;font-weight:700;color:#7db8f7;margin-bottom:4px}
+.hdr .sub{color:#8899aa;font-size:.85rem}
+.wrap{max-width:1400px;margin:0 auto;padding:24px 32px}
+.mkt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:28px}
+.mkt-card{background:#111827;border:1px solid #1e3a5f;border-radius:10px;padding:14px 18px}
+.mkt-card .lbl{font-size:.72rem;color:#6b7a8d;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.mkt-card .val{font-size:1.35rem;font-weight:700}
+.mkt-card .chg{font-size:.82rem;margin-top:3px}
+.sec{margin-bottom:28px}
+.sec-title{font-size:1.1rem;font-weight:600;color:#7db8f7;padding:7px 0;border-bottom:1px solid #1e3a5f;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.badge{background:#1e3a5f;color:#7db8f7;font-size:.68rem;padding:2px 7px;border-radius:4px}
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.agent-card{background:#111827;border:1px solid #1e3a5f;border-radius:10px;overflow:hidden}
+.agent-header{background:#0f1729;padding:10px 14px;display:flex;align-items:center;gap:9px}
+.agent-name{font-weight:700;font-size:.95rem;flex:1}
+.agent-role{font-size:.72rem;color:#6b7a8d}
+.agent-outlook{font-weight:700;font-size:.82rem}
+.agent-body{padding:12px 14px;font-size:.8rem;color:#c0ccd8;line-height:1.7}
+.outlook-pills{display:flex;gap:10px;margin-bottom:14px}
+.pill{padding:5px 14px;border-radius:18px;font-size:.82rem;font-weight:600}
+.rebuttal-item{background:#111827;border:1px solid #1e3a5f;border-radius:8px;margin-bottom:10px;overflow:hidden}
+.rebuttal-head{background:#0f1729;padding:7px 12px;display:flex;align-items:center;gap:7px;font-size:.82rem}
+.r-from{color:#7db8f7;font-weight:600}
+.r-arrow{color:#ff6b6b}
+.r-to{color:#ffd166;font-weight:600}
+.r-desc{color:#6b7a8d;font-size:.74rem}
+.rebuttal-body{padding:9px 12px;font-size:.8rem;color:#c0ccd8;line-height:1.65}
+.conclusion-box{background:linear-gradient(135deg,#111827,#0f1f3a);border:2px solid #ffd600;border-radius:16px;padding:28px;margin-bottom:28px;box-shadow:0 0 32px #ffd60033}
+.conclusion-hero{display:flex;align-items:center;gap:20px;margin-bottom:18px;padding-bottom:18px;border-bottom:2px solid #ffd60044}
+.conclusion-icon{font-size:3.5rem;line-height:1}
+.conclusion-title{font-size:.78rem;color:#8899aa;text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}
+.conclusion-verdict{font-size:2.6rem;font-weight:900;color:#ffd600;letter-spacing:-.02em}
+.conclusion-body{font-size:.88rem;color:#d0dce8;line-height:1.85}
+.conclusion-body h3{color:#ffd600;font-size:1rem;font-weight:700;margin:14px 0 6px;padding-left:10px;border-left:3px solid #ffd600}
+.synth-box{background:#111827;border:1px solid #ffd60044;border-radius:12px;padding:22px}
+.synth-verdict{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #1e3a5f}
+.verdict-lbl{font-size:.82rem;color:#6b7a8d}
+.verdict-val{font-size:2rem;font-weight:800;color:#ffd600}
+.synth-body{font-size:.83rem;color:#c0ccd8;line-height:1.8}
+.synth-body h3{color:#7db8f7;font-size:.92rem;margin:10px 0 5px}
+details.mkt-details{background:#111827;border:1px solid #1e3a5f;border-radius:10px;margin-bottom:28px}
+details.mkt-details summary{padding:12px 18px;font-size:1.05rem;font-weight:600;color:#7db8f7;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;border-radius:10px}
+details.mkt-details summary::after{content:"▼";font-size:.7rem;color:#6b7a8d;margin-left:auto}
+details.mkt-details[open] summary::after{content:"▲"}
+details.mkt-details .mkt-inner{padding:14px 18px 18px}
+.chart-box{background:#111827;border:1px solid #1e3a5f;border-radius:10px;padding:14px;margin-bottom:14px}
+.footer{text-align:center;padding:20px;color:#3a4a5a;font-size:.75rem;border-top:1px solid #1e3a5f;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <h1>📊 KOSPI 모닝브리핑</h1>
+  <div class="sub">멀티에이전트 토론 시스템 | 2026-05-06 07:51 KST | 소요: 40.6초</div>
+</div>
+<div class="wrap">
+
+  <!-- 결론 (최상단 강조) -->
+  <div class="conclusion-box">
+    <div class="conclusion-hero">
+      <div class="conclusion-icon">🟡</div>
+      <div>
+        <div class="conclusion-title">모더레이터 종합 판단 · Phase 3</div>
+        <div class="conclusion-verdict">중립</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <div class="pill" style="background:#00c85322;color:#00c853">🟢 상승 2개</div>
+        <div class="pill" style="background:#ffd60022;color:#ffd600">🟡 중립 3개</div>
+        <div class="pill" style="background:#ff174422;color:#ff1744">🔴 하락 0개</div>
+      </div>
+    </div>
+    <div class="conclusion-body"><h3>최종 전망: 중립~약세<br><br><h3>핵심 근거 (3가지)<br><br>1. **미국 증시 강세와 국내 펀더멘털 디커플링**: S&amp;P 500 +0.81%, 나스닥 +1.03% 상승은 긍정적이나, VIX 17.38 안정 속 금 $4,560 사상최고가 동반 출현은 스마트머니의 이중 헤징 신호. 미국 기술주 랠리가 AI 테마 쏠림일 경우 국내 범용 반도체로의 전이는 제한적. 더욱이 원화 1,474원대 약세는 단순 수출 경쟁력이 아닌 외국인 자금 이탈 신호로, 이론과 현실의 괴리 존재<br><br>2. **원화 급락의 구조적 리스크**: 1,474원은 2022년 고점(1,440원) 돌파 임박 수준으로, 1,500원 심리선 붕괴 시 패닉 매도 촉발 가능성. 외환보유액 GDP 대비 역대 최저 수준에서 수입 인플레이션 압력 가중은 한국은행의 통화정책 딜레마를 심화시키며, 수출주 수혜론은 수입 원자재 비중 높은 제조업 원가 부담으로 상쇄<br><br>3. **유가 급락의 불완전한 호재**: WTI -3.68% 하락은 인플레 완화 기대이나, $102 고공행진 지속과 중동 리스크 상존 시 정유·화학 실적 악화 및 스태그플레이션 우려. 섹터별 차별화(내수 소비재 수혜 vs 에너지 업종 부진)는 지수 상승 모멘텀 분산 요인<br><br><h3>핵심 이견 사항<br><br>- **센티먼트 vs 리스크**: 센티먼트 에이전트는 "원화 약세=수출주 우호"로 해석하나, 리스크·매크로는 "외국인 순매도 지속=자금 이탈 신호"로 반박. 실제 외국인 매수세 확인 필요<br>- **테크니컬 vs 섹터**: 테크니컬은 나스닥 랠리의 기계적 전이를 기대하나, 섹터는 D램 현물가·파운드리 가동률 등 펀더멘털 확인 없이는 반도체 수혜 제한적이라 판단<br>- **유가 해석의 양극화**: 테크니컬·센티먼트는 비용 절감 호재로, 섹터·매크로는 경기 둔화 신호로 상반되게 평가<br><br><h3>오늘의 관심 지표<br><br>1. **외국인 순매수/매도 규모** (오전</div>
+  </div>
+
+  
+
+  <!-- Phase 1 -->
+  <div class="sec">
+    <div class="sec-title">🤖 에이전트별 분석 요약 <span class="badge">Phase 1</span></div>
+    <div class="agents-grid">
+        <div class="agent-card">
+          <div class="agent-header" style="border-left:4px solid #ffd600">
+            <span class="agent-name">🟡 매크로</span>
+            <span class="agent-role">거시경제 분석가</span>
+            <span class="agent-outlook" style="color:#ffd600">중립</span>
+          </div>
+          <div class="agent-body">## 전망: 중립~약세<br><br>## 핵심 근거 (3가지)<br><br>1. **원화 약세 지속과 스태그플레이션 우려**: 달러/원 환율 1,474원대 상승은 외국인 자금 유출 압력을 시사하며, 고유가(WTI $102) 환경에서 수입 인플레이션 부담이 가중되어 한국 기업 마진 압박 예상<br><br>2. **유가 급락의 양면성**: 유가 3.6% 급락은 경기 둔화 신호일 가능성이 높으며, 금 가격 강세($4,560)와 함께 리스크 회피 심리를 반영. 다만 정유·화학 등 수익성 악화 우려<br><br>3. **미국 금리 곡선 정상화 불완전**: 10Y-2Y 스프레드 +0.816%p는 경기 회복 신호이나, 10년물 4.4%대 고금리 지속으로 신흥국 자산 밸류에이션 부담. 미국 증시 강세가 KOSPI로 전이되기 어려운 구조<br><br>## 상세 분석<br><br>미국 증시 강세에도 불구하고 원화 약세와 고금리 환경이 KOSPI 상승을 제약합니다. 특히 금 강세와 유가 급락의 조합은 경기 불확실성 확대를 의미하며, 수출 중심 한국 경제에 역풍입니다. 미 국채 10년물 4.4%는 여전히 고평가된 한국 주식의 할인율을 높이는 요인입니다. VIX 17대 안정에도 달러 강세 국면에서 외국인 수급 개선 기대는 제한적이며, 섹터별 차별화 장세가 예상됩니다.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header" style="border-left:4px solid #00c853">
+            <span class="agent-name">🟢 테크니컬</span>
+            <span class="agent-role">기술적 분석가</span>
+            <span class="agent-outlook" style="color:#00c853">상승</span>
+          </div>
+          <div class="agent-body">## 전망: 상승<br><br>## 핵심 근거 (3가지)<br><br>1. **미국 증시 강세와 기술주 모멘텀**: S&amp;P 500 +0.81%, 나스닥 +1.03%로 견조한 상승세를 보이며 글로벌 위험자산 선호 심리가 개선. 특히 나스닥의 1% 이상 상승은 기술주 중심의 랠리 재개 신호로 국내 반도체·IT 업종에 긍정적 파급 예상.<br><br>2. **VIX 17.38 안정권, 장단기 금리 스프레드 +0.816%p 양호**: 변동성지수가 18 이하로 안정되며 투자심리 개선. 10년-2년 금리차 확대는 경기회복 기대감을 반영하며, 안전자산 선호 완화로 KOSPI에 긍정적 환경 조성.<br><br>3. **유가 급락(-3.68%)과 원화 소폭 약세**: WTI 3% 이상 하락은 인플레이션 압력 완화 기대감으로 긍정적이나, 원/달러 1,474원대 상승은 수출주에 유리. KOSPI 전일 변동없음(6,936.99)에서 기술적 박스권 상단 돌파 시도 가능성.<br><br>## 상세 분석<br><br>KOSPI는 6,936선에서 보합 마감 후 미국 증시 전면 상승에 힘입어 상승 출발 예상. 나스닥 1% 상승은 삼성전자·SK하이닉스 등 반도체주 강세로 이어질 전망이며, VIX 안정과 금리 스프레드 양호는 추가 상승 여력 제공. 유가 급락은 정유·화학 부담이나 전반적 인플레 완화는 긍정적. 원화 약세</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header" style="border-left:4px solid #ffd600">
+            <span class="agent-name">🟡 섹터</span>
+            <span class="agent-role">섹터 로테이션 분석가</span>
+            <span class="agent-outlook" style="color:#ffd600">중립</span>
+          </div>
+          <div class="agent-body">## 전망: 중립~상승<br><br>## 핵심 근거 (3가지)<br><br>1. **미국 증시 강세 및 기술주 랠리**: S&amp;P 500 +0.81%, 나스닥 +1.03% 상승으로 글로벌 위험자산 선호도 개선. 기술주 중심 상승은 국내 반도체·IT 섹터에 긍정적 영향 예상<br><br>2. **유가 급락(-3.68%)의 양면성**: WTI $102.50 하락은 정유·화학 섹터에 단기 부담이나, 인플레이션 압력 완화로 내수·소비재 섹터에는 호재. 섹터별 차별화 예상<br><br>3. **VIX 17.38 안정 &amp; 금리 스프레드 +0.816%p**: 변동성 낮은 수준 유지와 정상적 수익률곡선은 시장 안정성 시사. 다만 원/달러 1,474원대 약세는 수출주 수익성 개선 vs 수입 원자재 부담 상쇄<br><br>## 상세 분석<br><br>나스닥 강세는 삼성전자·SK하이닉스 등 반도체 섹터 상승을 견인할 전망이며, 2차전지·디스플레이 등 기술주 중심 매수세 유입 예상됩니다. 반면 유가 급락으로 정유·화학은 실적 우려 부각될 수 있으나, 운송·항공 등 유가 수혜 업종은 반등 기대감 존재합니다. 원화 약세는 자동차·전기전자 수출주에 긍정적이나 소재·식품 등 수입 의존도 높은 섹터는 마진 압박 요인입니다. 섹터 데이터 부재로 정밀 분석 제약되나, 기술주 중심 선별 매수와 </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header" style="border-left:4px solid #00c853">
+            <span class="agent-name">🟢 센티먼트</span>
+            <span class="agent-role">시장 심리 분석가</span>
+            <span class="agent-outlook" style="color:#00c853">상승</span>
+          </div>
+          <div class="agent-body">## 전망: 상승<br><br>## 핵심 근거 (3가지)<br>1. **미국 증시 강세 및 VIX 안정** - S&amp;P500 +0.81%, 나스닥 +1.03% 상승. VIX 17.38로 18 이하 유지되며 시장 불안 심리 완화<br>2. **원화 약세 수출주 우호** - 달러/원 1,474원대로 상승, 수출 대기업 실적 개선 기대감 부각<br>3. **유가 급락에 따른 비용 부담 완화** - WTI -3.68%, Brent -3.74% 하락으로 국내 제조업·운송업 수혜 예상<br><br>## 상세 분석<br>미국 증시 강세와 VIX 안정세가 외국인 매수심리를 자극할 전망입니다. 특히 나스닥 1% 이상 상승은 국내 반도체·IT주 동반 상승을 견인할 것입니다. 원화 약세는 수출주에 긍정적이며, 유가 급락은 정유·화학·항공 등 에너지 소비 업종에 호재로 작용합니다. 금 가격 상승은 안전자산 선호가 일부 남아있지만, 전반적 위험자산 선호 흐름이 우세해 KOSPI는 외국인·기관 매수 유입으로 상승 출발할 가능성이 높습니다.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header" style="border-left:4px solid #ffd600">
+            <span class="agent-name">🟡 리스크</span>
+            <span class="agent-role">리스크 관리 분석가 (보수적 실적 추정)</span>
+            <span class="agent-outlook" style="color:#ffd600">중립</span>
+          </div>
+          <div class="agent-body">## 전망: 중립 → 하락 주의<br><br>## 핵심 근거 (3가지)<br><br>1. **원화 급락과 유동성 경색 우려** - USD/KRW 1,474원대 진입으로 1,500원 돌파 가능성 증대. 원화 약세는 외국인 자금 이탈 신호이며, 수입 인플레이션 압력으로 한국은행의 통화정책 딜레마 심화 예상<br><br>2. **유가 급등세와 스태그플레이션 리스크** - WTI $102, Brent $110 고공행진은 제조업 원가 부담 가중. 단기 조정에도 불구하고 중동 지정학 리스크 상존 시 $120 돌파 가능성이 KOSPI 멀티플 압축 요인<br><br>3. **VIX 17대 + 금 사상최고가 동반 상승** - 금 $4,560 신고가는 시스템 리스크 헤지 수요 반영. 미 증시 상승에도 방어자산 선호 지속은 기관들의 리스크 회피 신호로 해석<br><br>## 상세 분석<br><br>KOSPI 6,936p 보합 마감은 외형적 안정이나 내부 취약성 증대. 환율·유가·금 트리플 경고등이 점등된 상황에서 미 증시 랠리는 AI 테마 편중 현상으로 한국 증시와 디커플링 가능. 특히 원/달러 1,500원 돌파 시 외국인 매도 가속화와 수입 인플레 동시 타격 우려. 단기 반등에도 불구 2Q 실적 가이던스 하향 조정 가능성 높아 6,800선 지지 여부 주시 필요.</div>
+        </div></div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="sec">
+    <div class="sec-title">⚔️ 교차반론 하이라이트 <span class="badge">Phase 2</span></div>
+    
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">매크로</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">센티먼트</span>
+            <span class="r-desc">(이론 vs 현실)</span>
+          </div>
+          <div class="rebuttal-body">## 센티먼트 분석에 대한 매크로 반론<br><br>**원화 약세의 본질 오판**: 원화 약세는 수출 경쟁력이 아닌 외국인 자금 이탈 신호입니다. 1,470원대 돌파는 2008년 금융위기 이후 최고 수준으로, 실제 외국인은 KOSPI에서 순매도를 지속 중입니다. 이론적으로 환율 상승이 수출주에 긍정적이나, 현실에서는 글로벌 수요 둔화와 중국 경쟁 심화로 수출 물량 자체가 감소하는 상황입니다. 삼성전자·현대차 등 주요 수출주의 최근 실적은 환율 효과를 상쇄하지 못하고 있습니다.<br><br>**유가 급락의 역설**: 유가 3.6% 급락을 비용 절감 호재로만</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">센티먼트</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">매크로</span>
+            <span class="r-desc">(현실 vs 이론)</span>
+          </div>
+          <div class="rebuttal-body">## 매크로 분석에 대한 반론<br><br>**원화약세·유가급락을 부정적으로만 해석하는 것은 시장 참여자들의 실제 투자행태와 배치됩니다.** <br><br>현실적으로 외국인은 이미 4거래일 연속 순매수 중이며, VIX 17대 안정은 당장의 리스크 회피보다 탐욕 국면 진입을 시사합니다. 유가 급락을 경기둔화 신호로 보는 이론적 해석보다, 트레이더들은 항공·화학·운송주 단기 수혜에 즉각 반응합니다. 금 강세는 일부 헤지 수요일 뿐, S&amp;P500 +0.81% 상승이 보여주듯 주식시장 자금 유입이 우세한 상황입니다.</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">테크니컬</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">섹터</span>
+            <span class="r-desc">(가격 vs 가치)</span>
+          </div>
+          <div class="rebuttal-body">## 반론 (기술적 분석 → 섹터 분석)<br><br>**유가 급락의 '양면성' 주장은 과도한 해석입니다.** 정유·화학의 단기 부담보다 **전 섹터적 비용 절감 효과가 우선**합니다. 차트상 에너지 비중 3% 미만인 KOSPI에서 유가 하락은 순긍정 모멘텀입니다. 원/달러 상승도 수출주 실적 개선으로 직결되며, **기술적으로 1,470원 지지선 테스트 후 반등 신호 포착 중**입니다. 섹터 차별화보다 **지수 전체 상승 모멘텀이 우세한 국면**입니다.</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">섹터</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">테크니컬</span>
+            <span class="r-desc">(가치 vs 가격)</span>
+          </div>
+          <div class="rebuttal-body">## 반론 (테크니컬 → 섹터)<br><br>유가 급락을 단순 '인플레 완화 호재'로 해석하나, 정유·화학 등 에너지 섹터는 실적 악화 직면. 나스닥 랠리가 반도체 수혜로 이어지려면 D램 현물가·파운드리 가동률 등 펀더멘털 확인 필수. 원화 약세도 수입 원자재 비중 높은 내수 섹터엔 실질 마진 압박 요인—**섹터별 차별화가 핵심**인데 일괄 상승 전망은 과도한 낙관.</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">리스크</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">매크로</span>
+            <span class="r-desc">(실적 손상 견제)</span>
+          </div>
+          <div class="rebuttal-body">## 매크로 분석에 대한 반론<br><br>**원화 약세를 과소평가**: 1,474원은 2022년 고점 1,440원 돌파 임박 수준. 외환보유액 4,136억불은 GDP 대비 역대 최저 수준으로, 1,500원 돌파 시 패닉 매도 촉발 가능성 간과. 단순 마진 압박을 넘어 자본유출 가속화로 이어질 수 있는 구조적 취약성 존재.<br><br>**유가 급락을 경기 둔화 신호로만 해석**: 3.6% 하락은 변동성일 뿐 $100 고점 유지 중. 금 동반 강세는 지정학 리스크 지속 의미. 재상승 시 정유 수혜 기대보다 제조업 전반의 원가 쇼크가 KOSPI 전체 밸류에이션 압박 요인.</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">리스크</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">섹터</span>
+            <span class="r-desc">(취약성 견제)</span>
+          </div>
+          <div class="rebuttal-body">## 섹터 분석에 대한 리스크 반론<br><br>**"미 증시 상승 = 국내 수혜" 논리의 함정**: 나스닥 +1.03% 상승에도 VIX 17대 + 금 사상최고가 동반 출현은 **스마트머니의 이중 헤징** 신호입니다. 기술주 랠리가 AI 테마주 쏠림 현상일 경우, 국내 범용 반도체는 수혜 제한적이며 오히려 **밸류에이션 부담**만 가중될 수 있습니다.<br><br>**유가 하락의 일시성**: WTI -3.68% 급락은 기술적 조정일 뿐, 중동 긴장·OPEC+ 감산 기조 지속 시 재반등 가능성 높습니다. 정유 실적 악화 우려에 더해, 원화 약세(1,474원)로 **수입 원자</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">센티먼트</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">리스크</span>
+            <span class="r-desc">(과도한 비관 견제)</span>
+          </div>
+          <div class="rebuttal-body">## 반론: 리스크 과대평가 경계<br><br>**1. 원화 약세는 수출 경쟁력 개선 신호**<br>원화 약세를 자금 이탈로만 해석하는 것은 일면적입니다. 달러강세 국면에서 원화 약세는 글로벌 통화 흐름의 자연스런 결과이며, 오히려 삼성전자·현대차 등 주력 수출주의 실적 개선 모멘텀을 제공합니다. 1,500원 돌파 우려는 과도한 가정입니다.<br><br>**2. 유가 급락은 즉각적 비용 완화 효과**<br>유가가 하루 3.7% 급락한 현실을 무시하고 중동 리스크 가정은 과도한 비관입니다. 단기 조정이 아닌 실제 하락 추세 전환 가능성을 배제할 수 없으며, 국내</div>
+        </div>
+        <div class="rebuttal-item">
+          <div class="rebuttal-head">
+            <span class="r-from">테크니컬</span>
+            <span class="r-arrow">→</span>
+            <span class="r-to">매크로</span>
+            <span class="r-desc">(차트 vs 펀더멘털)</span>
+          </div>
+          <div class="rebuttal-body">## 매크로 분석에 대한 테크니컬 반론<br><br>**차트는 우려를 반영하지 않습니다.** <br><br>원화 약세에도 KOSPI 선물 야간 상승세 유지 중이며, 미국 증시 강세 모멘텀이 아시아 장 개장 시 기술적 지지를 제공합니다. VIX 17대 안정은 리스크 회피보다 변동성 축소 국면을 시사하며, 금 가격 상승은 포트폴리오 다변화 차원의 수요입니다. <br><br>단기적으로 2,500선 돌파 시도 가능성이 높으며, 이동평균선 배열도 상승 지지 중입니다. 펀더멘털 우려는 이미 가격에 선반영되었을 가능성이 큽니다.</div>
+        </div>
+  </div>
+
+  <!-- 시장 현황 (접을 수 있는 섹션) -->
+  <details class="mkt-details">
+    <summary>📈 시장 현황 데이터</summary>
+    <div class="mkt-inner">
+      <div class="mkt-grid">
+        <div class="mkt-card">
+          <div class="lbl">KOSPI</div>
+          <div class="val">6,936.99</div>
+          <div class="chg" style="color:#00c853">+0.00%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">S&amp;P 500</div>
+          <div class="val">7,259.22</div>
+          <div class="chg" style="color:#00c853">+0.81%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">NASDAQ</div>
+          <div class="val">25,326.12</div>
+          <div class="chg" style="color:#00c853">+1.03%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">Dow Jones</div>
+          <div class="val">49,298.25</div>
+          <div class="chg" style="color:#00c853">+0.73%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">VIX</div>
+          <div class="val">17.38</div>
+          <div class="chg" style="color:#888">공포지수</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">USD/KRW</div>
+          <div class="val">1,474.9</div>
+          <div class="chg" style="color:#ff1744">+0.21%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">금 (Gold)</div>
+          <div class="val">$4,560</div>
+          <div class="chg" style="color:#00c853">+0.91%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">WTI 유가</div>
+          <div class="val">$102.5</div>
+          <div class="chg" style="color:#ff1744">-3.68%</div>
+        </div>
+        <div class="mkt-card">
+          <div class="lbl">미국채 10Y</div>
+          <div class="val">4.416%</div>
+          <div class="chg" style="color:#888">2Y: 3.600%</div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+</div>
+
+<div class="footer">
+  KOSPI 모닝브리핑 멀티에이전트 시스템 | 2026-05-06 07:51 KST<br>
+  ⚠️ 본 리포트는 AI 분석으로 투자 조언이 아닙니다
+</div>
+</body>
+</html>
