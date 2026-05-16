@@ -8,6 +8,14 @@ KOSPI 모닝브리핑 멀티에이전트 토론 시스템
 - 출력: HTML 다크모드 대시보드(Gist) + Telegram 알림
 """
 
+# === anthropic_usage_reporter (auto-injected) ===
+try:
+    from anthropic_usage_reporter import patch_anthropic_client
+    patch_anthropic_client(workflow="kospi-morning")
+except Exception:
+    pass
+# === end auto-injection ===
+
 import os
 import json
 import asyncio
